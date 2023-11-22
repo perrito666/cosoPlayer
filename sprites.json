@@ -1,0 +1,80 @@
+[
+  {
+    "id": "mainTitleBar",
+    "file": "TITLEBAR.BMP",
+    "boundingRectangleX": 275,
+    "boundingRectangleY": 14,
+    "offsetX": 27,
+    "offsetY": 0,
+    "absX": 0,
+    "absY": 0
+  },
+  {
+    "id": "closeButton",
+    "file": "TITLEBAR.BMP",
+    "boundingRectangleX": 9,
+    "boundingRectangleY": 9,
+    "offsetX": 18,
+    "offsetY": 0,
+    "absX": 263,
+    "absY": 3
+  },
+  {
+    "id": "cButtonBack",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 23,
+    "boundingRectangleY": 18,
+    "offsetX": 0,
+    "offsetY": 0,
+    "absX": 17,
+    "absY": 85
+  },
+  {
+    "id": "cButtonPlay",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 23,
+    "boundingRectangleY": 18,
+    "offsetX": 23,
+    "offsetY": 0,
+    "absX": 40,
+    "absY": 85
+  },
+  {
+    "id": "cButtonPause",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 23,
+    "boundingRectangleY": 18,
+    "offsetX": 46,
+    "offsetY": 0,
+    "absX": 63,
+    "absY": 85
+  },
+  {
+    "id": "cButtonStop",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 23,
+    "boundingRectangleY": 18,
+    "offsetX": 69,
+    "offsetY": 0,
+    "absX": 86,
+    "absY": 85
+  },{
+    "id": "cButtonFwd",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 22,
+    "boundingRectangleY": 18,
+    "offsetX": 92,
+    "offsetY": 0,
+    "absX": 109,
+    "absY": 85
+  },{
+    "id": "cButtonEject",
+    "file": "CBUTTONS.BMP",
+    "boundingRectangleX": 23,
+    "boundingRectangleY": 16,
+    "offsetX": 112,
+    "offsetY": 0,
+    "absX": 134,
+    "absY": 86
+  }
+]
