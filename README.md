@@ -2,6 +2,11 @@
 
 This will become a winamp like player, it will take time though
 
+## Acknowledgements
+
+The sprites.json file was generated from data in:
+https://github.com/captbaritone/webamp
+
 ## Running
 
 You need a winamp skin, for now extract it under `./skins/tmp` It is not part of this repo for obvious reasons.

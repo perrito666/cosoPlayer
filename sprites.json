@@ -1,80 +1,368 @@
 [
   {
-    "id": "mainTitleBar",
-    "file": "TITLEBAR.BMP",
-    "boundingRectangleX": 275,
-    "boundingRectangleY": 14,
-    "offsetX": 27,
-    "offsetY": 0,
-    "absX": 0,
-    "absY": 0
+    "id": "wabtn.previous",
+    "action": "PREV",
+    "absolutePositionX": 16,
+    "absolutePositionY": 88,
+    "image": {
+      "id": "prev",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 0,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "downimage": {
+      "id": "prevp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 18,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "tooltip": "Previous Track"
   },
   {
-    "id": "closeButton",
-    "file": "TITLEBAR.BMP",
-    "boundingRectangleX": 9,
-    "boundingRectangleY": 9,
-    "offsetX": 18,
-    "offsetY": 0,
-    "absX": 263,
-    "absY": 3
+    "id": "wabtn.play",
+    "action": "PLAY",
+    "absolutePositionX": 39,
+    "absolutePositionY": 88,
+    "image": {
+      "id": "play",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 23,
+      "spritePositionY": 0,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "downimage": {
+      "id": "playp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 23,
+      "spritePositionY": 18,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "tooltip": "Play"
   },
   {
-    "id": "cButtonBack",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 23,
-    "boundingRectangleY": 18,
-    "offsetX": 0,
-    "offsetY": 0,
-    "absX": 17,
-    "absY": 85
+    "id": "wabtn.pause",
+    "action": "PAUSE",
+    "absolutePositionX": 62,
+    "absolutePositionY": 88,
+    "image": {
+      "id": "pause",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 46,
+      "spritePositionY": 0,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "downimage": {
+      "id": "pausep",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 46,
+      "spritePositionY": 18,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "tooltip": "Pause"
   },
   {
-    "id": "cButtonPlay",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 23,
-    "boundingRectangleY": 18,
-    "offsetX": 23,
-    "offsetY": 0,
-    "absX": 40,
-    "absY": 85
+    "id": "wabtn.stop",
+    "action": "STOP",
+    "absolutePositionX": 85,
+    "absolutePositionY": 88,
+    "image": {
+      "id": "stop",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 69,
+      "spritePositionY": 0,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "downimage": {
+      "id": "stopp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 69,
+      "spritePositionY": 18,
+      "spriteHeight": 18,
+      "spriteWidth": 23
+    },
+    "tooltip": "Stop"
   },
   {
-    "id": "cButtonPause",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 23,
-    "boundingRectangleY": 18,
-    "offsetX": 46,
-    "offsetY": 0,
-    "absX": 63,
-    "absY": 85
+    "id": "wabtn.next",
+    "action": "NEXT",
+    "absolutePositionX": 108,
+    "absolutePositionY": 88,
+    "image": {
+      "id": "next",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 92,
+      "spritePositionY": 0,
+      "spriteHeight": 18,
+      "spriteWidth": 22
+    },
+    "downimage": {
+      "id": "nextp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 92,
+      "spritePositionY": 18,
+      "spriteHeight": 18,
+      "spriteWidth": 22
+    },
+    "tooltip": "Next Track"
   },
   {
-    "id": "cButtonStop",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 23,
-    "boundingRectangleY": 18,
-    "offsetX": 69,
-    "offsetY": 0,
-    "absX": 86,
-    "absY": 85
-  },{
-    "id": "cButtonFwd",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 22,
-    "boundingRectangleY": 18,
-    "offsetX": 92,
-    "offsetY": 0,
-    "absX": 109,
-    "absY": 85
-  },{
-    "id": "cButtonEject",
-    "file": "CBUTTONS.BMP",
-    "boundingRectangleX": 23,
-    "boundingRectangleY": 16,
-    "offsetX": 112,
-    "offsetY": 0,
-    "absX": 134,
-    "absY": 86
+    "id": "wabtn.open",
+    "action": "EJECT",
+    "absolutePositionX": 136,
+    "absolutePositionY": 89,
+    "image": null,
+    "downimage": {
+      "id": "ejectp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 114,
+      "spritePositionY": 16,
+      "spriteHeight": 16,
+      "spriteWidth": 22
+    },
+    "tooltip": "Open File(s)"
+  },
+  {
+    "id": "wa.sysmenu",
+    "action": "SYSMENU",
+    "absolutePositionX": 6,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "menu",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": {
+      "id": "menup",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 9,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "tooltip": "Winamp Menu"
+  },
+  {
+    "id": "wa.minimize",
+    "action": "MINIMIZE",
+    "absolutePositionX": 244,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "mini",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 9,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": {
+      "id": "minip",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 9,
+      "spritePositionY": 9,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "tooltip": "Minimize"
+  },
+  {
+    "id": "wa.switch",
+    "action": "SWITCH",
+    "absolutePositionX": 254,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "switch",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 18,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": {
+      "id": "switchp",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 9,
+      "spritePositionY": 18,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "tooltip": "Toggle Windowshade Mode"
+  },
+  {
+    "id": "wa.close",
+    "action": "CLOSE",
+    "absolutePositionX": 264,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "close",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 18,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": {
+      "id": "closep",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 18,
+      "spritePositionY": 9,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "tooltip": "Close"
+  },
+  {
+    "id": "eq",
+    "action": "TOGGLE",
+    "absolutePositionX": 219,
+    "absolutePositionY": 58,
+    "image": {
+      "id": "player.toggler.eq.disabled",
+      "file": "skin/shufrep.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 61,
+      "spriteHeight": 12,
+      "spriteWidth": 23
+    },
+    "downimage": null,
+    "tooltip": "Toggle Equalizer"
+  },
+  {
+    "id": "pl",
+    "action": "TOGGLE",
+    "absolutePositionX": 242,
+    "absolutePositionY": 58,
+    "image": {
+      "id": "player.toggler.pl.disabled",
+      "file": "skin/shufrep.bmp",
+      "spritePositionX": 23,
+      "spritePositionY": 61,
+      "spriteHeight": 12,
+      "spriteWidth": 23
+    },
+    "downimage": null,
+    "tooltip": "Toggle Playlist Editor"
+  },
+  {
+    "id": "Previous",
+    "action": "PREV",
+    "absolutePositionX": 166,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Previous"
+  },
+  {
+    "id": "Play",
+    "action": "PLAY",
+    "absolutePositionX": 176,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Play"
+  },
+  {
+    "id": "Pause",
+    "action": "PAUSE",
+    "absolutePositionX": 186,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Pause"
+  },
+  {
+    "id": "Stop",
+    "action": "STOP",
+    "absolutePositionX": 196,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Stop"
+  },
+  {
+    "id": "Next",
+    "action": "NEXT",
+    "absolutePositionX": 206,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Next"
+  },
+  {
+    "id": "Eject",
+    "action": "EJECT",
+    "absolutePositionX": 216,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": "Eject"
+  },
+  {
+    "id": "winshade",
+    "action": "SWITCH",
+    "absolutePositionX": 254,
+    "absolutePositionY": 3,
+    "image": null,
+    "downimage": null,
+    "tooltip": null
+  },
+  {
+    "id": "Close",
+    "action": "close",
+    "absolutePositionX": 264,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "wa2.player.title.quit",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 18,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": null,
+    "tooltip": "Close"
+  },
+  {
+    "id": "Minimize",
+    "action": "MINIMIZE",
+    "absolutePositionX": 244,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "wa2.player.title.min",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 9,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": null,
+    "tooltip": "Minimize Winamp"
+  },
+  {
+    "id": "sysbutton",
+    "action": "SYSMENU",
+    "absolutePositionX": 6,
+    "absolutePositionY": 3,
+    "image": {
+      "id": "wa2.player.shade.menu",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 9
+    },
+    "downimage": null,
+    "tooltip": null
   }
 ]
