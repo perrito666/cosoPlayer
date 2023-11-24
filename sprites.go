@@ -78,10 +78,14 @@ type AnimatedSprite struct {
 	AbsolutePositionX int     `json:"absolutePositionX"`
 	AbsolutePositionY int     `json:"absolutePositionY"`
 	Image             Sprite  `json:"image"`
-	DownImage         *Sprite `json:"downimage"`
+	DownImage         *Sprite `json:"downImage"`
+	ActiveImage       *Sprite `json:"activeImage"`
 	Tooltip           string  `json:"tooltip"`
-	Pressed           bool    `json:"-"`
-	ToggleAble        bool    `json:"toggleAble"`
+	ToggleAble        bool    `json:"isToggle"`
+
+	// These are not part of the json, they are used to track the state of the sprite
+	Pressed bool `json:"-"`
+	Toggled bool `json:"-"`
 }
 
 // Sprite is a single sprite, they are used in the context of an AnimatedSprite as one of the two frames
@@ -103,7 +107,6 @@ func (s *AnimatedSprite) Collision(x, y int) bool {
 
 func (s *AnimatedSprite) Load(prefix, skinName string, fileCache map[string]image.Image) error {
 	if err := s.Image.Load(prefix, skinName, fileCache); err != nil {
-		fmt.Printf("%#v\n", s)
 		return fmt.Errorf("loading Sprite: %s in Animated Sprite %s: %w", s.Image.ID, s.ID, err)
 	}
 	if s.DownImage != nil {
@@ -141,6 +144,8 @@ func (s *AnimatedSprite) pressed() {
 
 func (s *AnimatedSprite) dePressed() {
 	s.Pressed = false
+	// if this is not a toggle is a noop
+	s.Toggled = !s.Toggled
 }
 
 func (s *AnimatedSprite) ColorModel() color.Model {
@@ -156,10 +161,15 @@ func (s *Sprite) At(x, y int) color.Color {
 }
 
 func (s *AnimatedSprite) At(x, y int) color.Color {
+	posX := x - s.AbsolutePositionX
+	posY := y - s.AbsolutePositionY
 	if s.Pressed && s.DownImage != nil {
-		return s.DownImage.At(x-s.AbsolutePositionX, y-s.AbsolutePositionY)
+		return s.DownImage.At(posX, posY)
 	}
-	return s.Image.At(x-s.AbsolutePositionX, y-s.AbsolutePositionY)
+	if s.ToggleAble && s.Toggled && s.ActiveImage != nil {
+		return s.ActiveImage.At(posX, posY)
+	}
+	return s.Image.At(posX, posY)
 }
 
 var _ image.Image = (*AnimatedSprite)(nil)
