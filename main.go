@@ -62,6 +62,25 @@ type bgWidget struct {
 	bg   *Backgound
 	x, y float32
 	w    fyne.Window
+	rdr  fyne.WidgetRenderer
+}
+
+func (item *bgWidget) MouseDown(event *desktop.MouseEvent) {
+	x := int(event.Position.X / scaleFactor)
+	y := int(event.Position.Y / scaleFactor)
+	fmt.Printf("MouseDown: %d, %d\n", x, y)
+	item.bg.stack.MouseDown(x, y)
+	item.ci.Refresh()
+	item.rdr.Refresh()
+}
+
+func (item *bgWidget) MouseUp(event *desktop.MouseEvent) {
+	x := int(event.Position.X / scaleFactor)
+	y := int(event.Position.Y / scaleFactor)
+	fmt.Printf("MouseUp: %d, %d\n", x, y)
+	item.bg.stack.DoAtPosition(x, y)
+	item.ci.Refresh()
+	item.rdr.Refresh()
 }
 
 func (item *bgWidget) Dragged(event *fyne.DragEvent) {
@@ -75,12 +94,13 @@ func (item *bgWidget) DragEnd() {
 }
 
 var _ fyne.Tappable = (*bgWidget)(nil)
+var _ desktop.Mouseable = (*bgWidget)(nil)
 
 func (item *bgWidget) Tapped(event *fyne.PointEvent) {
-	x := int(event.Position.X / scaleFactor)
-	y := int(event.Position.Y / scaleFactor)
-	fmt.Printf("Tapped: %d, %d\n", x, y)
-	item.bg.stack.DoAtPosition(x, y)
+	//x := int(event.Position.X / scaleFactor)
+	//y := int(event.Position.Y / scaleFactor)
+	//fmt.Printf("Tapped: %d, %d\n", x, y)
+	//item.bg.stack.DoAtPosition(x, y)
 }
 
 var _ fyne.Draggable = (*bgWidget)(nil)
@@ -103,7 +123,8 @@ func (item *bgWidget) CreateRenderer() fyne.WidgetRenderer {
 	cnt := container.New(layout.NewStackLayout(),
 		item.ci,
 	)
-	return widget.NewSimpleRenderer(cnt)
+	item.rdr = widget.NewSimpleRenderer(cnt)
+	return item.rdr
 }
 
 func main() {

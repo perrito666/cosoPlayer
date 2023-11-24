@@ -28,17 +28,27 @@ func (s *SpriteStack) DrawAtPosition(x, y int) color.Color {
 	return nil
 }
 
+func (s *SpriteStack) MouseDown(x, y int) {
+	for i := range s.sprites {
+		sp := s.sprites[len(s.sprites)-i-1]
+		if sp.Collision(x, y) {
+			sp.pressed()
+			return
+		}
+	}
+}
+
 func (s *SpriteStack) DoAtPosition(x, y int) {
 	for i := range s.sprites {
 		sp := s.sprites[len(s.sprites)-i-1]
 		if sp.Collision(x, y) {
+			sp.dePressed()
 			if sp.Action != "" && s.actionHandler != nil {
 				if fn, ok := s.actionHandler[sp.Action]; ok {
 					fn()
 				}
 				return
 			}
-			fmt.Printf("Tapped: %s\n", sp.ID)
 			return
 		}
 	}
@@ -70,6 +80,8 @@ type AnimatedSprite struct {
 	Image             Sprite  `json:"image"`
 	DownImage         *Sprite `json:"downimage"`
 	Tooltip           string  `json:"tooltip"`
+	Pressed           bool    `json:"-"`
+	ToggleAble        bool    `json:"toggleAble"`
 }
 
 // Sprite is a single sprite, they are used in the context of an AnimatedSprite as one of the two frames
@@ -123,6 +135,14 @@ func (s *Sprite) Load(prefix, skinName string, fileCache map[string]image.Image)
 	return nil
 }
 
+func (s *AnimatedSprite) pressed() {
+	s.Pressed = true
+}
+
+func (s *AnimatedSprite) dePressed() {
+	s.Pressed = false
+}
+
 func (s *AnimatedSprite) ColorModel() color.Model {
 	return s.Image.Image.ColorModel()
 }
@@ -136,6 +156,9 @@ func (s *Sprite) At(x, y int) color.Color {
 }
 
 func (s *AnimatedSprite) At(x, y int) color.Color {
+	if s.Pressed && s.DownImage != nil {
+		return s.DownImage.At(x-s.AbsolutePositionX, y-s.AbsolutePositionY)
+	}
 	return s.Image.At(x-s.AbsolutePositionX, y-s.AbsolutePositionY)
 }
 

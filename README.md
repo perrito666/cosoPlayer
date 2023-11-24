@@ -9,9 +9,9 @@ https://github.com/captbaritone/webamp
 
 ## Running
 
-You need a winamp skin, for now extract it under `./skins/tmp` It is not part of this repo for obvious reasons.
+You need a winamp skin, for now extract it under `./skins/default` It is not part of this repo for obvious reasons.
 
-then you can just `go run ./main.go ./actions.go`
+then you can just `go build .;./cosoPlayer`
 
 This is very much ongoing as it is a thing i began during Golab IO (amazing conference in firenze, check it out)
 as a proof of concept.
