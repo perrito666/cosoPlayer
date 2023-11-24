@@ -124,7 +124,7 @@ func main() {
 		Height: 116 * scaleFactor,
 	})
 
-	mainWindowF, err := os.Open("./skins/tmp/MAIN.BMP")
+	mainWindowF, err := os.Open("./skins/default/MAIN.BMP")
 	if err != nil {
 		panic(err)
 	}

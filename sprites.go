@@ -52,7 +52,7 @@ func (s *SpriteStack) UnmarshalJSON(data []byte) error {
 
 	for _, sprite := range tgt {
 		if err := sprite.Load(s.prefix, s.skinName, s.fileCache); err != nil {
-			return err
+			return fmt.Errorf("loading image in: %s/%s %w", s.prefix, s.skinName, err)
 		}
 	}
 
@@ -91,11 +91,12 @@ func (s *AnimatedSprite) Collision(x, y int) bool {
 
 func (s *AnimatedSprite) Load(prefix, skinName string, fileCache map[string]image.Image) error {
 	if err := s.Image.Load(prefix, skinName, fileCache); err != nil {
-		return err
+		fmt.Printf("%#v\n", s)
+		return fmt.Errorf("loading Sprite: %s in Animated Sprite %s: %w", s.Image.ID, s.ID, err)
 	}
 	if s.DownImage != nil {
 		if err := s.DownImage.Load(prefix, skinName, fileCache); err != nil {
-			return err
+			return fmt.Errorf("loading DownSprite: %s: %w", s.DownImage.ID, err)
 		}
 	}
 	return nil
@@ -109,12 +110,12 @@ func (s *Sprite) Load(prefix, skinName string, fileCache map[string]image.Image)
 	if !ok {
 		f, err := os.Open(filepath.Join(prefix, fName))
 		if err != nil {
-			return err
+			return fmt.Errorf("opening file: %s: %w", fName, err)
 		}
 		defer f.Close()
 		rawImg, _, err = image.Decode(f)
 		if err != nil {
-			return err
+			return fmt.Errorf("decoding image: %s: %w", fName, err)
 		}
 		fileCache[s.File] = rawImg
 	}

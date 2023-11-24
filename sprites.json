@@ -119,7 +119,14 @@
     "action": "EJECT",
     "absolutePositionX": 136,
     "absolutePositionY": 89,
-    "image": null,
+    "image": {
+      "id": "eject",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 114,
+      "spritePositionY": 0,
+      "spriteHeight": 16,
+      "spriteWidth": 22
+    },
     "downimage": {
       "id": "ejectp",
       "file": "skin/cbuttons.bmp",
@@ -253,69 +260,6 @@
     },
     "downimage": null,
     "tooltip": "Toggle Playlist Editor"
-  },
-  {
-    "id": "Previous",
-    "action": "PREV",
-    "absolutePositionX": 166,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Previous"
-  },
-  {
-    "id": "Play",
-    "action": "PLAY",
-    "absolutePositionX": 176,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Play"
-  },
-  {
-    "id": "Pause",
-    "action": "PAUSE",
-    "absolutePositionX": 186,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Pause"
-  },
-  {
-    "id": "Stop",
-    "action": "STOP",
-    "absolutePositionX": 196,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Stop"
-  },
-  {
-    "id": "Next",
-    "action": "NEXT",
-    "absolutePositionX": 206,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Next"
-  },
-  {
-    "id": "Eject",
-    "action": "EJECT",
-    "absolutePositionX": 216,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": "Eject"
-  },
-  {
-    "id": "winshade",
-    "action": "SWITCH",
-    "absolutePositionX": 254,
-    "absolutePositionY": 3,
-    "image": null,
-    "downimage": null,
-    "tooltip": null
   },
   {
     "id": "Close",
