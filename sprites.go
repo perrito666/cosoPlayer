@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"fyne.io/fyne/v2"
 )
 
 type SpriteStack struct {
@@ -16,6 +18,33 @@ type SpriteStack struct {
 	prefix        string
 	skinName      string
 	actionHandler map[string]func()
+	draggedItem   int
+}
+
+func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
+	x := int(event.Position.X)
+	y := int(event.Position.Y)
+	if s.draggedItem < 0 {
+		for i := range s.sprites {
+			sp := s.sprites[len(s.sprites)-i-1]
+			if sp.Collision(x, y) {
+				s.draggedItem = i
+				break
+			}
+		}
+		if s.draggedItem < 0 {
+			return
+		}
+	}
+	if s.sprites[s.draggedItem].DragAble &&
+		x > s.sprites[s.draggedItem].MinDragX &&
+		x < s.sprites[s.draggedItem].MaxDragX {
+		s.sprites[s.draggedItem].AbsolutePositionX = x
+	}
+}
+
+func (s *SpriteStack) DragEnd() {
+	s.draggedItem = -1
 }
 
 func (s *SpriteStack) DrawAtPosition(x, y int) color.Color {
@@ -82,6 +111,9 @@ type AnimatedSprite struct {
 	ActiveImage       *Sprite `json:"activeImage"`
 	Tooltip           string  `json:"tooltip"`
 	ToggleAble        bool    `json:"isToggle"`
+	DragAble          bool    `json:"isDrag"`
+	MinDragX          int     `json:"minDrag"`
+	MaxDragX          int     `json:"maxDrag"`
 
 	// These are not part of the json, they are used to track the state of the sprite
 	Pressed bool `json:"-"`

@@ -48,13 +48,6 @@ func main() {
 		Height: 116 * scaleFactor,
 	})
 
-	mainWindowF, err := os.Open("./skins/default/MAIN.BMP")
-	if err != nil {
-		panic(err)
-	}
-	mainWindowIMG, _, err := image.Decode(mainWindowF)
-	defer mainWindowF.Close()
-
 	// Load sprites
 	stack, err := stackFromFromDefinitions()
 	if err != nil {
@@ -62,8 +55,7 @@ func main() {
 	}
 
 	mainWindowBG := &Background{
-		underlyingImage: mainWindowIMG,
-		stack:           stack,
+		stack: stack,
 	}
 
 	stack.register("close", func() { w.Close() })

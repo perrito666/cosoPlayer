@@ -15,23 +15,22 @@ import (
 
 // Background Holds the background image and implements a thin wrapper to implement image.Image
 type Background struct {
-	underlyingImage image.Image
-	stack           *SpriteStack
+	stack *SpriteStack
 }
 
 func (b *Background) ColorModel() color.Model {
-	return b.underlyingImage.ColorModel()
+	return b.stack.sprites[0].ColorModel()
 }
 
 func (b *Background) Bounds() image.Rectangle {
-	return b.underlyingImage.Bounds()
+	return b.stack.sprites[0].Bounds()
 }
 
 func (b *Background) At(x, y int) color.Color {
 	if colorAt := b.stack.DrawAtPosition(x, y); colorAt != nil {
 		return colorAt
 	}
-	return b.underlyingImage.At(x, y)
+	return b.stack.sprites[0].At(x, y)
 }
 
 type bgWidget struct {
@@ -62,13 +61,11 @@ func (item *bgWidget) MouseUp(event *desktop.MouseEvent) {
 }
 
 func (item *bgWidget) Dragged(event *fyne.DragEvent) {
-	item.x = event.AbsolutePosition.X
-	item.y = event.AbsolutePosition.Y
-
+	item.bg.stack.Dragged(event)
 }
 
 func (item *bgWidget) DragEnd() {
-	fmt.Println("DragEnd")
+	item.bg.stack.DragEnd()
 }
 
 var _ desktop.Mouseable = (*bgWidget)(nil)

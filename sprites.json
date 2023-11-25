@@ -1,5 +1,119 @@
 [
   {
+    "id": "mainwnd",
+    "action": null,
+    "absolutePositionX": 0,
+    "absolutePositionY": 0,
+    "image": {
+      "id": "wa.main",
+      "file": "skin/main.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 0,
+      "spriteHeight": 116,
+      "spriteWidth": 275
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
+    "id": "posbarbg",
+    "action": null,
+    "absolutePositionX": 16,
+    "absolutePositionY": 72,
+    "image": {
+      "id": "posbarbg",
+      "file": "skin/posbar.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 0,
+      "spriteHeight": 10,
+      "spriteWidth": 248
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
+    "id": "playbackstatus",
+    "action": null,
+    "absolutePositionX": 24,
+    "absolutePositionY": 28,
+    "image": {
+      "id": "wa.play.green",
+      "file": "skin/playpaus.bmp",
+      "spritePositionX": 36,
+      "spritePositionY": 0,
+      "spriteHeight": 9,
+      "spriteWidth": 3
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
+    "id": "wa.titlebar",
+    "action": null,
+    "absolutePositionX": 0,
+    "absolutePositionY": 0,
+    "image": {
+      "id": "wa.titlebar.on",
+      "file": "skin/titlebar.bmp",
+      "spritePositionX": 27,
+      "spritePositionY": 0,
+      "spriteHeight": 13,
+      "spriteWidth": 275
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
+    "id": "mono",
+    "action": null,
+    "absolutePositionX": 212,
+    "absolutePositionY": 41,
+    "image": {
+      "id": "player.status.mono.inactive",
+      "file": "skin/monoster.bmp",
+      "spritePositionX": 29,
+      "spritePositionY": 12,
+      "spriteHeight": 12,
+      "spriteWidth": 27
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
+    "id": "stereo",
+    "action": null,
+    "absolutePositionX": 239,
+    "absolutePositionY": 41,
+    "image": {
+      "id": "player.status.stereo.inactive",
+      "file": "skin/monoster.bmp",
+      "spritePositionX": 0,
+      "spritePositionY": 12,
+      "spriteHeight": 12,
+      "spriteWidth": 29
+    },
+    "downImage": null,
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
+  },
+  {
     "id": "wabtn.previous",
     "action": "PREV",
     "absolutePositionX": 16,
@@ -20,7 +134,10 @@
       "spriteHeight": 18,
       "spriteWidth": 23
     },
-    "tooltip": "Previous Track"
+    "tooltip": "Previous Track",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wabtn.play",
@@ -43,7 +160,10 @@
       "spriteHeight": 18,
       "spriteWidth": 23
     },
-    "tooltip": "Play"
+    "tooltip": "Play",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wabtn.pause",
@@ -66,7 +186,10 @@
       "spriteHeight": 18,
       "spriteWidth": 23
     },
-    "tooltip": "Pause"
+    "tooltip": "Pause",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wabtn.stop",
@@ -89,7 +212,10 @@
       "spriteHeight": 18,
       "spriteWidth": 23
     },
-    "tooltip": "Stop"
+    "tooltip": "Stop",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wabtn.next",
@@ -112,7 +238,10 @@
       "spriteHeight": 18,
       "spriteWidth": 22
     },
-    "tooltip": "Next Track"
+    "tooltip": "Next Track",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wabtn.open",
@@ -135,7 +264,10 @@
       "spriteHeight": 16,
       "spriteWidth": 22
     },
-    "tooltip": "Open File(s)"
+    "tooltip": "Open File(s)",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wa.sysmenu",
@@ -158,7 +290,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Winamp Menu"
+    "tooltip": "Winamp Menu",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wa.minimize",
@@ -181,7 +316,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Minimize"
+    "tooltip": "Minimize",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wa.switch",
@@ -204,7 +342,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Toggle Windowshade Mode"
+    "tooltip": "Toggle Windowshade Mode",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "wa.close",
@@ -227,7 +368,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Close"
+    "tooltip": "Close",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "eq",
@@ -251,6 +395,9 @@
       "spriteWidth": 23
     },
     "tooltip": "Toggle Equalizer",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0,
     "activeImage": {
       "id": "player.toggler.eq.enabled",
       "file": "skin/shufrep.bmp",
@@ -283,6 +430,9 @@
       "spriteWidth": 23
     },
     "tooltip": "Toggle Playlist Editor",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0,
     "activeImage": {
       "id": "player.toggler.pl.enabled",
       "file": "skin/shufrep.bmp",
@@ -314,7 +464,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Close"
+    "tooltip": "Close",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "Minimize",
@@ -337,7 +490,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": "Minimize Winamp"
+    "tooltip": "Minimize Winamp",
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "sysbutton",
@@ -360,7 +516,10 @@
       "spriteHeight": 9,
       "spriteWidth": 9
     },
-    "tooltip": null
+    "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0
   },
   {
     "id": "Repeat",
@@ -384,6 +543,9 @@
       "spriteWidth": 28
     },
     "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0,
     "activeImage": {
       "id": "repa",
       "file": "skin/shufrep.bmp",
@@ -416,6 +578,9 @@
       "spriteWidth": 47
     },
     "tooltip": null,
+    "dragAble": false,
+    "minDrag": 0,
+    "maxDrag": 0,
     "activeImage": {
       "id": "shufa",
       "file": "skin/shufrep.bmp",
@@ -425,5 +590,31 @@
       "spriteWidth": 47
     },
     "isToggle": true
+  },
+  {
+    "id": "player.slider.seek",
+    "action": "SEEK",
+    "absolutePositionX": 16,
+    "absolutePositionY": 72,
+    "image": {
+      "id": "posbar",
+      "file": "skin/posbar.bmp",
+      "spritePositionX": 248,
+      "spritePositionY": 0,
+      "spriteHeight": 10,
+      "spriteWidth": 29
+    },
+    "downImage": {
+      "id": "posbarp",
+      "file": "skin/posbar.bmp",
+      "spritePositionX": 278,
+      "spritePositionY": 0,
+      "spriteHeight": 10,
+      "spriteWidth": 29
+    },
+    "tooltip": null,
+    "dragAble": true,
+    "minDrag": 16,
+    "maxDrag": 248
   }
 ]
