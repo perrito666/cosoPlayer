@@ -115,6 +115,29 @@
     "tooltip": "Next Track"
   },
   {
+    "id": "wabtn.open",
+    "action": "EJECT",
+    "absolutePositionX": 136,
+    "absolutePositionY": 89,
+    "image": {
+      "id": "eject",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 114,
+      "spritePositionY": 0,
+      "spriteHeight": 16,
+      "spriteWidth": 22
+    },
+    "downImage": {
+      "id": "ejectp",
+      "file": "skin/cbuttons.bmp",
+      "spritePositionX": 114,
+      "spritePositionY": 16,
+      "spriteHeight": 16,
+      "spriteWidth": 22
+    },
+    "tooltip": "Open File(s)"
+  },
+  {
     "id": "wa.sysmenu",
     "action": "SYSMENU",
     "absolutePositionX": 6,

@@ -114,6 +114,11 @@ func (s *AnimatedSprite) Load(prefix, skinName string, fileCache map[string]imag
 			return fmt.Errorf("loading DownSprite: %s: %w", s.DownImage.ID, err)
 		}
 	}
+	if s.ActiveImage != nil {
+		if err := s.ActiveImage.Load(prefix, skinName, fileCache); err != nil {
+			return fmt.Errorf("loading DownSprite: %s: %w", s.ActiveImage.ID, err)
+		}
+	}
 	return nil
 }
 
