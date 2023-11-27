@@ -22,13 +22,13 @@ type SpriteStack struct {
 }
 
 func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
-	x := int(event.Position.X)
-	y := int(event.Position.Y)
+	x := int(event.Position.X/scaleFactor)
+	y := int(event.Position.Y/scaleFactor)
 	if s.draggedItem < 0 {
 		for i := range s.sprites {
 			sp := s.sprites[len(s.sprites)-i-1]
 			if sp.Collision(x, y) {
-				s.draggedItem = i
+				s.draggedItem = len(s.sprites)-i-1
 				break
 			}
 		}
@@ -36,14 +36,19 @@ func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
 			return
 		}
 	}
+	fmt.Println(s.sprites[s.draggedItem].ID)
 	if s.sprites[s.draggedItem].DragAble &&
 		x > s.sprites[s.draggedItem].MinDragX &&
 		x < s.sprites[s.draggedItem].MaxDragX {
 		s.sprites[s.draggedItem].AbsolutePositionX = x
+		return
 	}
 }
 
 func (s *SpriteStack) DragEnd() {
+	if s.draggedItem < 0{
+		s.sprites[s.draggedItem].dePressed()
+	}
 	s.draggedItem = -1
 }
 
@@ -111,7 +116,7 @@ type AnimatedSprite struct {
 	ActiveImage       *Sprite `json:"activeImage"`
 	Tooltip           string  `json:"tooltip"`
 	ToggleAble        bool    `json:"isToggle"`
-	DragAble          bool    `json:"isDrag"`
+	DragAble          bool    `json:"dragAble"`
 	MinDragX          int     `json:"minDrag"`
 	MaxDragX          int     `json:"maxDrag"`
 

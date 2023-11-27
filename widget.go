@@ -62,6 +62,8 @@ func (item *bgWidget) MouseUp(event *desktop.MouseEvent) {
 
 func (item *bgWidget) Dragged(event *fyne.DragEvent) {
 	item.bg.stack.Dragged(event)
+	item.ci.Refresh()
+	item.rdr.Refresh()
 }
 
 func (item *bgWidget) DragEnd() {
