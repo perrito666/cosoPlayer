@@ -54,8 +54,19 @@ func main() {
 		panic(err)
 	}
 
+	textLayer := &TextLayer{}
+	textLayer.sprites = append(textLayer.sprites, &TextSprite{
+		Text:              "CD TRACK 5",
+		StrLen:            9,
+		Marquee:           false,
+		RenderedText:      nil,
+		Image:             nil,
+		AbsolutePositionX: 40,
+		AbsolutePositionY: 60,
+	})
 	mainWindowBG := &Background{
-		stack: stack,
+		stack:     stack,
+		textLayer: textLayer,
 	}
 
 	stack.register("close", func() { w.Close() })

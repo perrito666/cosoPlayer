@@ -15,7 +15,8 @@ import (
 
 // Background Holds the background image and implements a thin wrapper to implement image.Image
 type Background struct {
-	stack *SpriteStack
+	stack     *SpriteStack
+	textLayer *TextLayer
 }
 
 func (b *Background) ColorModel() color.Model {
@@ -27,9 +28,14 @@ func (b *Background) Bounds() image.Rectangle {
 }
 
 func (b *Background) At(x, y int) color.Color {
+	if colorAt := b.textLayer.DrawAtPosition(x, y); colorAt != nil {
+		return colorAt
+	}
+
 	if colorAt := b.stack.DrawAtPosition(x, y); colorAt != nil {
 		return colorAt
 	}
+
 	return b.stack.sprites[0].At(x, y)
 }
 

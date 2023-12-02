@@ -22,13 +22,13 @@ type SpriteStack struct {
 }
 
 func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
-	x := int(event.Position.X/scaleFactor)
-	y := int(event.Position.Y/scaleFactor)
+	x := int(event.Position.X / scaleFactor)
+	y := int(event.Position.Y / scaleFactor)
 	if s.draggedItem < 0 {
 		for i := range s.sprites {
 			sp := s.sprites[len(s.sprites)-i-1]
 			if sp.Collision(x, y) {
-				s.draggedItem = len(s.sprites)-i-1
+				s.draggedItem = len(s.sprites) - i - 1
 				break
 			}
 		}
@@ -46,7 +46,7 @@ func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
 }
 
 func (s *SpriteStack) DragEnd() {
-	if s.draggedItem < 0{
+	if s.draggedItem < 0 {
 		s.sprites[s.draggedItem].dePressed()
 	}
 	s.draggedItem = -1
@@ -125,17 +125,6 @@ type AnimatedSprite struct {
 	Toggled bool `json:"-"`
 }
 
-// Sprite is a single sprite, they are used in the context of an AnimatedSprite as one of the two frames
-type Sprite struct {
-	ID              string      `json:"id"`
-	File            string      `json:"file"`
-	Image           image.Image `json:"-"`
-	SpritePositionX int         `json:"spritePositionX"`
-	SpritePositionY int         `json:"spritePositionY"`
-	SpriteHeight    int         `json:"spriteHeight"`
-	SpriteWidth     int         `json:"spriteWidth"`
-}
-
 func (s *AnimatedSprite) Collision(x, y int) bool {
 	inX := x > s.AbsolutePositionX && x < s.AbsolutePositionX+s.Image.SpriteWidth
 	inY := y > s.AbsolutePositionY && y < s.AbsolutePositionY+s.Image.SpriteHeight
@@ -157,6 +146,17 @@ func (s *AnimatedSprite) Load(prefix, skinName string, fileCache map[string]imag
 		}
 	}
 	return nil
+}
+
+// Sprite is a single sprite, they are used in the context of an AnimatedSprite as one of the two frames
+type Sprite struct {
+	ID              string      `json:"id"`
+	File            string      `json:"file"`
+	Image           image.Image `json:"-"`
+	SpritePositionX int         `json:"spritePositionX"`
+	SpritePositionY int         `json:"spritePositionY"`
+	SpriteHeight    int         `json:"spriteHeight"`
+	SpriteWidth     int         `json:"spriteWidth"`
 }
 
 func (s *Sprite) Load(prefix, skinName string, fileCache map[string]image.Image) error {
