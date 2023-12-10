@@ -126,8 +126,8 @@ type AnimatedSprite struct {
 }
 
 func (s *AnimatedSprite) Collision(x, y int) bool {
-	inX := x > s.AbsolutePositionX && x < s.AbsolutePositionX+s.Image.SpriteWidth
-	inY := y > s.AbsolutePositionY && y < s.AbsolutePositionY+s.Image.SpriteHeight
+	inX := x >= s.AbsolutePositionX && x < s.AbsolutePositionX+s.Image.SpriteWidth
+	inY := y >= s.AbsolutePositionY && y < s.AbsolutePositionY+s.Image.SpriteHeight
 	return inX && inY
 }
 

@@ -11,10 +11,11 @@ import (
 )
 
 const scaleFactor = 2
+const skinsPrefix = "./skins"
 
 func stackFromFromDefinitions() (*SpriteStack, error) {
 	stack := SpriteStack{
-		prefix:    "./skins",
+		prefix:    skinsPrefix,
 		skinName:  "default",
 		fileCache: map[string]image.Image{},
 	}
@@ -55,15 +56,20 @@ func main() {
 	}
 
 	textLayer := &TextLayer{}
-	textLayer.sprites = append(textLayer.sprites, &TextSprite{
-		Text:              "CD TRACK 5",
-		StrLen:            9,
+	ts := &TextSprite{
+		Text:              "CD TRACK 5.MP3",
+		File:              "skin/text.bmp",
+		StrLen:            27,
 		Marquee:           false,
 		RenderedText:      nil,
 		Image:             nil,
-		AbsolutePositionX: 40,
-		AbsolutePositionY: 60,
-	})
+		AbsolutePositionX: 110,
+		AbsolutePositionY: 28,
+	}
+	if err := ts.Load(skinsPrefix, "default"); err != nil {
+		panic(err)
+	}
+	textLayer.sprites = append(textLayer.sprites, ts)
 	mainWindowBG := &Background{
 		stack:     stack,
 		textLayer: textLayer,

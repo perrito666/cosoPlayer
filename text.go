@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 type position struct {
@@ -42,7 +46,7 @@ var charMap = map[rune]position{
 	'Y':  {120, 0},
 	'Z':  {125, 0},
 	'"':  {130, 0},
-	'©':  {135, 0},
+	'@':  {135, 0},
 	'0':  {0, 6},
 	'1':  {5, 6},
 	'2':  {10, 6},
@@ -73,16 +77,36 @@ var charMap = map[rune]position{
 	',':  {135, 6},
 	'=':  {140, 6},
 	'$':  {145, 6},
+	' ':  {145, 0},
 }
 
 type TextSprite struct {
 	Text              string `json:"text"`
-	StrLen            int    `json:"strLen"`
-	Marquee           bool   `json:"marquee"`
+	File              string
+	StrLen            int  `json:"strLen"`
+	Marquee           bool `json:"marquee"`
 	RenderedText      []position
 	Image             image.Image
 	AbsolutePositionX int
 	AbsolutePositionY int
+}
+
+func (t *TextSprite) Load(prefix, skinName string) error {
+	// I suspect that, due to this was done for fat32, the skins contain uppercase filenames.
+	fName := strings.Replace(strings.ToUpper(t.File), "SKIN", skinName, 1)
+
+	f, err := os.Open(filepath.Join(prefix, fName))
+	if err != nil {
+		return fmt.Errorf("opening file: %s: %w", fName, err)
+	}
+	defer f.Close()
+	rawImg, _, err := image.Decode(f)
+	if err != nil {
+		return fmt.Errorf("decoding image: %s: %w", fName, err)
+	}
+
+	t.Image = rawImg
+	return nil
 }
 
 func (t *TextSprite) ColorModel() color.Model {
@@ -103,12 +127,14 @@ func (t *TextSprite) Bounds() image.Rectangle {
 }
 
 func (t *TextSprite) At(x, y int) color.Color {
+	fmt.Printf("raw asked X %d, Y%d\n", x, y)
 	posX := x - t.AbsolutePositionX
 	posY := y - t.AbsolutePositionY
 	return t.DrawAtPosition(posX, posY)
 }
 
 func (t *TextSprite) DrawAtPosition(x, y int) color.Color {
+	fmt.Printf("asked X %d, Y%d\n", x, y)
 	if len(t.RenderedText) == 0 {
 		spriteString := make([]position, t.StrLen)
 		for i, c := range t.Text {
@@ -120,14 +146,18 @@ func (t *TextSprite) DrawAtPosition(x, y int) color.Color {
 			}
 		}
 		spriteString[t.StrLen-1] = charMap[ellipse]
+		t.RenderedText = spriteString
 	}
 	if x == 0 {
 		charPos := t.RenderedText[0]
 		return t.Image.At(charPos.X, charPos.Y+y)
 	}
 	charN := x / charWidth
+	if charN > len(t.RenderedText)-1 || charN > len(t.Text)-1 {
+		return nil
+	}
 	drawableChar := t.RenderedText[charN]
-	return t.Image.At(drawableChar.X+(x-charWidth*charN-1), drawableChar.Y+y)
+	return t.Image.At(drawableChar.X+(x-charWidth*charN), drawableChar.Y+y)
 }
 
 type TextLayer struct {
@@ -135,15 +165,15 @@ type TextLayer struct {
 }
 
 func (t *TextSprite) Collision(x, y int) bool {
-	inX := x > t.AbsolutePositionX && x < t.AbsolutePositionX+charWidth*t.StrLen
-	inY := y > t.AbsolutePositionY && y < t.AbsolutePositionY+charHeight
+	inX := x >= t.AbsolutePositionX && x < t.AbsolutePositionX+charWidth*t.StrLen
+	inY := y >= t.AbsolutePositionY && y < t.AbsolutePositionY+charHeight
 	return inX && inY
 }
 
 func (t *TextLayer) DrawAtPosition(x, y int) color.Color {
 	for i := range t.sprites {
 		if t.sprites[i].Collision(x, y) {
-			return t.sprites[i].DrawAtPosition(x, y)
+			return t.sprites[i].At(x, y)
 		}
 	}
 	return nil
