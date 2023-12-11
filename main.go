@@ -34,7 +34,6 @@ func stackFromFromDefinitions() (*SpriteStack, error) {
 func main() {
 	a := app.New()
 	// w := a.NewWindow("It really whips the guanaco's ass!!!")
-
 	drv, ok := a.Driver().(desktop.Driver)
 	if !ok {
 		panic("driver is not a driver")
@@ -70,6 +69,38 @@ func main() {
 		panic(err)
 	}
 	textLayer.sprites = append(textLayer.sprites, ts)
+
+	timeM := &TextSprite{
+		Text:              "01",
+		File:              "skin/numbers.bmp",
+		Numeric:           true,
+		CharSpacing:       1,
+		StrLen:            2,
+		Marquee:           false,
+		RenderedText:      nil,
+		Image:             nil,
+		AbsolutePositionX: 50,
+		AbsolutePositionY: 26,
+	}
+	if err := timeM.Load(skinsPrefix, "default"); err != nil {
+		panic(err)
+	}
+	timeS := &TextSprite{
+		Text:              "23",
+		File:              "skin/numbers.bmp",
+		Numeric:           true,
+		CharSpacing:       1,
+		StrLen:            2,
+		Marquee:           false,
+		RenderedText:      nil,
+		Image:             timeM.Image, // it's the same image
+		AbsolutePositionX: 80,
+		AbsolutePositionY: 26,
+	}
+
+	textLayer.sprites = append(textLayer.sprites, timeS)
+	textLayer.sprites = append(textLayer.sprites, timeM)
+
 	mainWindowBG := &Background{
 		stack:     stack,
 		textLayer: textLayer,

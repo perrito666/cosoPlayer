@@ -17,6 +17,8 @@ type position struct {
 const ellipse = '…'
 const charWidth = 5
 const charHeight = 6
+const numWidth = 9
+const numHeight = 13
 
 var charMap = map[rune]position{
 	'A':  {0, 0},
@@ -80,8 +82,24 @@ var charMap = map[rune]position{
 	' ':  {145, 0},
 }
 
+var numberMap = map[rune]position{
+	'0': {0, 0},
+	'1': {9, 0},
+	'2': {18, 0},
+	'3': {27, 0},
+	'4': {36, 0},
+	'5': {45, 0},
+	'6': {54, 0},
+	'7': {63, 0},
+	'8': {72, 0},
+	'9': {81, 0},
+	' ': {90, 0},
+}
+
 type TextSprite struct {
 	Text              string `json:"text"`
+	Numeric           bool
+	CharSpacing       int
 	File              string
 	StrLen            int  `json:"strLen"`
 	Marquee           bool `json:"marquee"`
@@ -113,6 +131,20 @@ func (t *TextSprite) ColorModel() color.Model {
 	return t.Image.ColorModel()
 }
 
+func (t *TextSprite) RuneWidth() int {
+	if t.Numeric {
+		return numWidth
+	}
+	return charWidth
+}
+
+func (t *TextSprite) RuneHeight() int {
+	if t.Numeric {
+		return numHeight
+	}
+	return charHeight
+}
+
 func (t *TextSprite) Bounds() image.Rectangle {
 	return image.Rectangle{
 		Min: image.Point{
@@ -120,44 +152,58 @@ func (t *TextSprite) Bounds() image.Rectangle {
 			Y: 0,
 		},
 		Max: image.Point{
-			X: charWidth * t.StrLen,
-			Y: charHeight,
+			X: (t.RuneWidth() + t.CharSpacing) * t.StrLen,
+			Y: t.RuneHeight(),
 		},
 	}
 }
 
 func (t *TextSprite) At(x, y int) color.Color {
-	fmt.Printf("raw asked X %d, Y%d\n", x, y)
 	posX := x - t.AbsolutePositionX
 	posY := y - t.AbsolutePositionY
 	return t.DrawAtPosition(posX, posY)
 }
 
 func (t *TextSprite) DrawAtPosition(x, y int) color.Color {
-	fmt.Printf("asked X %d, Y%d\n", x, y)
+	var useMap map[rune]position
+	if t.Numeric {
+		useMap = numberMap
+	} else {
+		useMap = charMap
+	}
 	if len(t.RenderedText) == 0 {
 		spriteString := make([]position, t.StrLen)
 		for i, c := range t.Text {
-			if i > t.StrLen-2 {
+			if i > t.StrLen-1 {
 				break
 			}
-			if p, ok := charMap[c]; ok {
+			if p, ok := useMap[c]; ok {
 				spriteString[i] = p
 			}
 		}
-		spriteString[t.StrLen-1] = charMap[ellipse]
+		if !t.Numeric {
+			spriteString[t.StrLen-1] = useMap[ellipse]
+		}
 		t.RenderedText = spriteString
 	}
 	if x == 0 {
 		charPos := t.RenderedText[0]
 		return t.Image.At(charPos.X, charPos.Y+y)
 	}
-	charN := x / charWidth
+	charN := x / (t.RuneWidth() + t.CharSpacing)
 	if charN > len(t.RenderedText)-1 || charN > len(t.Text)-1 {
 		return nil
 	}
 	drawableChar := t.RenderedText[charN]
-	return t.Image.At(drawableChar.X+(x-charWidth*charN), drawableChar.Y+y)
+	fmt.Printf("charN %d is rune %c (%q) at %d,%d\n", charN, t.Text[charN], t.Text, drawableChar.X, drawableChar.Y)
+	// position for X is tricky here
+	// we know the offset to the beginning of the char within the text by multiplying the charN by the width of a char + spacing
+	// then we subtract that from the X position we were asked to draw at we get the position within the character
+	xPosInChar := x - (t.RuneWidth()+t.CharSpacing)*charN
+	if xPosInChar >= t.RuneWidth() { // this is the case where we're in the spacing
+		return nil
+	}
+	return t.Image.At(drawableChar.X+xPosInChar, drawableChar.Y+y)
 }
 
 type TextLayer struct {
@@ -165,8 +211,8 @@ type TextLayer struct {
 }
 
 func (t *TextSprite) Collision(x, y int) bool {
-	inX := x >= t.AbsolutePositionX && x < t.AbsolutePositionX+charWidth*t.StrLen
-	inY := y >= t.AbsolutePositionY && y < t.AbsolutePositionY+charHeight
+	inX := x >= t.AbsolutePositionX && x < (t.AbsolutePositionX+t.RuneWidth()+t.CharSpacing)*t.StrLen
+	inY := y >= t.AbsolutePositionY && y < t.AbsolutePositionY+t.RuneHeight()
 	return inX && inY
 }
 
