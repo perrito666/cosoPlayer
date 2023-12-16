@@ -109,6 +109,14 @@ type TextSprite struct {
 	AbsolutePositionY int
 }
 
+func (t *TextSprite) Set(text string) {
+	if text == t.Text {
+		return
+	}
+	t.Text = text
+	t.RenderedText = []position{}
+}
+
 func (t *TextSprite) Load(prefix, skinName string) error {
 	// I suspect that, due to this was done for fat32, the skins contain uppercase filenames.
 	fName := strings.Replace(strings.ToUpper(t.File), "SKIN", skinName, 1)
@@ -195,7 +203,6 @@ func (t *TextSprite) DrawAtPosition(x, y int) color.Color {
 		return nil
 	}
 	drawableChar := t.RenderedText[charN]
-	fmt.Printf("charN %d is rune %c (%q) at %d,%d\n", charN, t.Text[charN], t.Text, drawableChar.X, drawableChar.Y)
 	// position for X is tricky here
 	// we know the offset to the beginning of the char within the text by multiplying the charN by the width of a char + spacing
 	// then we subtract that from the X position we were asked to draw at we get the position within the character

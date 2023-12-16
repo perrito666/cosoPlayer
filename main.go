@@ -2,12 +2,15 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"fyne.io/fyne/v2/dialog"
 	"image"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/driver/desktop"
 )
 
 const scaleFactor = 2
@@ -15,9 +18,10 @@ const skinsPrefix = "./skins"
 
 func stackFromFromDefinitions() (*SpriteStack, error) {
 	stack := SpriteStack{
-		prefix:    skinsPrefix,
-		skinName:  "default",
-		fileCache: map[string]image.Image{},
+		prefix:        skinsPrefix,
+		skinName:      "default",
+		fileCache:     map[string]image.Image{},
+		actionHandler: map[string]func(){},
 	}
 	f, err := os.Open("./sprites.json")
 	if err != nil {
@@ -33,13 +37,13 @@ func stackFromFromDefinitions() (*SpriteStack, error) {
 
 func main() {
 	a := app.New()
-	// w := a.NewWindow("It really whips the guanaco's ass!!!")
-	drv, ok := a.Driver().(desktop.Driver)
-	if !ok {
-		panic("driver is not a driver")
-	}
-	w := drv.CreateSplashWindow()
-	w.SetFixedSize(true)
+	w := a.NewWindow("It really whips the guanaco's ass!!!")
+	//drv, ok := a.Driver().(desktop.Driver)
+	//if !ok {
+	//panic("driver is not a driver")
+	//}
+	//w := drv.CreateSplashWindow()
+	//w.SetFixedSize(true)
 	w.SetMaster()
 	w.SetPadded(false)
 
@@ -56,7 +60,7 @@ func main() {
 
 	textLayer := &TextLayer{}
 	ts := &TextSprite{
-		Text:              "CD TRACK 5.MP3",
+		Text:              "CLICK EJECT BUTTON",
 		File:              "skin/text.bmp",
 		StrLen:            27,
 		Marquee:           false,
@@ -71,7 +75,7 @@ func main() {
 	textLayer.sprites = append(textLayer.sprites, ts)
 
 	timeM := &TextSprite{
-		Text:              "01",
+		Text:              "00",
 		File:              "skin/numbers.bmp",
 		Numeric:           true,
 		CharSpacing:       1,
@@ -86,7 +90,7 @@ func main() {
 		panic(err)
 	}
 	timeS := &TextSprite{
-		Text:              "23",
+		Text:              "00",
 		File:              "skin/numbers.bmp",
 		Numeric:           true,
 		CharSpacing:       1,
@@ -107,8 +111,48 @@ func main() {
 	}
 
 	stack.register("close", func() { w.Close() })
+	widget := newBgWidget(mainWindowBG)
+	w.SetContent(widget)
 
-	w.SetContent(newBgWidget(mainWindowBG))
+	player, err := NewPlayer(func(elapsed, total uint64) error {
+		mins := elapsed / 60
+		seconds := elapsed - (mins * 60)
+		timeM.Set(fmt.Sprintf("%02d", mins))
+		timeS.Set(fmt.Sprintf("%02d", seconds))
+		perc := (float64(elapsed) * 100.0) / float64(total)
+		stack.FindByID("player.slider.seek").DraggableSeek(perc / 100)
+		widget.Refresh()
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	go player.PlayerLoop()
+
+	stack.register("STOP", func() {
+		player.Stop()
+	})
+
+	stack.register("PLAY", func() {
+		err = player.Play()
+		if err != nil {
+			panic(err)
+		}
+	})
+	stack.register("PAUSE", func() {
+		player.TogglePause()
+	})
+	stack.register("EJECT", func() {
+		dialog.NewFileOpen(func(uri fyne.URIReadCloser, err error) {
+			defer uri.Close()
+			player.LoadFile(uri.URI().Path())
+			fileName := filepath.Base(uri.URI().Path())
+			ts.Set(strings.ToUpper(fileName))
+			widget.Refresh()
+		}, w).Show()
+		//NewFileOpen(callback func(fyne.URIReadCloser, error), parent fyne.Window) *FileDialog
+	})
 
 	w.ShowAndRun()
 }

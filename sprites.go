@@ -21,6 +21,15 @@ type SpriteStack struct {
 	draggedItem   int
 }
 
+func (s *SpriteStack) FindByID(name string) *AnimatedSprite {
+	for _, sprite := range s.sprites {
+		if sprite.ID == name {
+			return sprite
+		}
+	}
+	return nil
+}
+
 func (s *SpriteStack) Dragged(event *fyne.DragEvent) {
 	x := int(event.Position.X / scaleFactor)
 	y := int(event.Position.Y / scaleFactor)
@@ -212,6 +221,13 @@ func (s *AnimatedSprite) At(x, y int) color.Color {
 		return s.ActiveImage.At(posX, posY)
 	}
 	return s.Image.At(posX, posY)
+}
+
+func (s *AnimatedSprite) DraggableSeek(percentage float64) {
+	if !s.DragAble || (percentage > 1 || percentage < 0) {
+		return
+	}
+	s.AbsolutePositionX = s.MinDragX + int(float64(s.MaxDragX-s.MinDragX)*percentage)
 }
 
 var _ image.Image = (*AnimatedSprite)(nil)
