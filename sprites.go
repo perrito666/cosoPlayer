@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"image"
 	"image/color"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"fyne.io/fyne/v2"
 )
@@ -15,9 +12,8 @@ import (
 type SpriteStack struct {
 	sprites       []*AnimatedSprite
 	fileCache     map[string]image.Image
-	prefix        string
-	skinName      string
-	actionHandler map[string]func()
+	skin          *Skin
+	actionHandler map[string]func() error
 	draggedItem   int
 }
 
@@ -88,7 +84,11 @@ func (s *SpriteStack) DoAtPosition(x, y int) {
 			sp.dePressed()
 			if sp.Action != "" && s.actionHandler != nil {
 				if fn, ok := s.actionHandler[sp.Action]; ok {
-					fn()
+					err := fn()
+					if err != nil {
+						// FIXME: Bubble this up
+						fmt.Println(fmt.Errorf("error calling action %s: %v", sp.Action, err))
+					}
 				}
 				return
 			}
@@ -104,8 +104,8 @@ func (s *SpriteStack) UnmarshalJSON(data []byte) error {
 	}
 
 	for _, sprite := range tgt {
-		if err := sprite.Load(s.prefix, s.skinName, s.fileCache); err != nil {
-			return fmt.Errorf("loading image in: %s/%s %w", s.prefix, s.skinName, err)
+		if err := sprite.Load(s.skin, s.fileCache); err != nil {
+			return fmt.Errorf("loading image in: %w", err)
 		}
 	}
 
@@ -140,17 +140,17 @@ func (s *AnimatedSprite) Collision(x, y int) bool {
 	return inX && inY
 }
 
-func (s *AnimatedSprite) Load(prefix, skinName string, fileCache map[string]image.Image) error {
-	if err := s.Image.Load(prefix, skinName, fileCache); err != nil {
+func (s *AnimatedSprite) Load(skin *Skin, fileCache map[string]image.Image) error {
+	if err := s.Image.Load(skin, fileCache); err != nil {
 		return fmt.Errorf("loading Sprite: %s in Animated Sprite %s: %w", s.Image.ID, s.ID, err)
 	}
 	if s.DownImage != nil {
-		if err := s.DownImage.Load(prefix, skinName, fileCache); err != nil {
+		if err := s.DownImage.Load(skin, fileCache); err != nil {
 			return fmt.Errorf("loading DownSprite: %s: %w", s.DownImage.ID, err)
 		}
 	}
 	if s.ActiveImage != nil {
-		if err := s.ActiveImage.Load(prefix, skinName, fileCache); err != nil {
+		if err := s.ActiveImage.Load(skin, fileCache); err != nil {
 			return fmt.Errorf("loading DownSprite: %s: %w", s.ActiveImage.ID, err)
 		}
 	}
@@ -168,20 +168,19 @@ type Sprite struct {
 	SpriteWidth     int         `json:"spriteWidth"`
 }
 
-func (s *Sprite) Load(prefix, skinName string, fileCache map[string]image.Image) error {
+func (s *Sprite) Load(skin *Skin, fileCache map[string]image.Image) error {
 	rawImg, ok := fileCache[s.File]
 
 	// I suspect that, due to this was done for fat32, the skins contain uppercase filenames.
-	fName := strings.Replace(strings.ToUpper(s.File), "SKIN", skinName, 1)
 	if !ok {
-		f, err := os.Open(filepath.Join(prefix, fName))
+		f, err := skin.Open(s.File)
 		if err != nil {
-			return fmt.Errorf("opening file: %s: %w", fName, err)
+			return fmt.Errorf("opening file: %s: %w", s.File, err)
 		}
 		defer f.Close()
 		rawImg, _, err = image.Decode(f)
 		if err != nil {
-			return fmt.Errorf("decoding image: %s: %w", fName, err)
+			return fmt.Errorf("decoding image: %s: %w", s.File, err)
 		}
 		fileCache[s.File] = rawImg
 	}
