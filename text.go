@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"image"
 	"image/color"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
 type position struct {
@@ -117,18 +114,16 @@ func (t *TextSprite) Set(text string) {
 	t.RenderedText = []position{}
 }
 
-func (t *TextSprite) Load(prefix, skinName string) error {
+func (t *TextSprite) Load(skin *Skin) error {
 	// I suspect that, due to this was done for fat32, the skins contain uppercase filenames.
-	fName := strings.Replace(strings.ToUpper(t.File), "SKIN", skinName, 1)
-
-	f, err := os.Open(filepath.Join(prefix, fName))
+	f, err := skin.Open(t.File)
 	if err != nil {
-		return fmt.Errorf("opening file: %s: %w", fName, err)
+		return fmt.Errorf("opening file: %s: %w", t.File, err)
 	}
 	defer f.Close()
 	rawImg, _, err := image.Decode(f)
 	if err != nil {
-		return fmt.Errorf("decoding image: %s: %w", fName, err)
+		return fmt.Errorf("decoding image: %s: %w", t.File, err)
 	}
 
 	t.Image = rawImg
